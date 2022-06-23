@@ -6,6 +6,7 @@
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
     // members
@@ -37,7 +38,7 @@ public class Deque<Item> implements Iterable<Item> {
         capacity = 1;
     }
 
-    public String toString() {
+    private String print() {
         return "Deque{" +
                 "q=" + Arrays.toString(q) +
                 '}';
@@ -55,6 +56,9 @@ public class Deque<Item> implements Iterable<Item> {
 
     // add the item to the front
     public void addFirst(Item item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Can not add a null pointer...");
+        }
         if (head - 1 < 0) {
             resize(2 * capacity);
         }
@@ -63,6 +67,9 @@ public class Deque<Item> implements Iterable<Item> {
 
     // add the item to the back
     public void addLast(Item item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Can not add a null pointer...");
+        }
         if (tail >= capacity) {
             resize(2 * capacity);
         }
@@ -71,23 +78,67 @@ public class Deque<Item> implements Iterable<Item> {
 
     // remove and return the item from the front
     public Item removeFirst() {
-        return null;
+        if (size() == 0) {
+            throw new NoSuchElementException("Can not get an item from an empty queue...");
+        }
+        Item item = q[head];
+        q[head++] = null;
+        if (size() > 0 && size() == capacity / 4) {
+            resize(capacity / 2);
+        }
+        return item;
     }
 
     // remove and return the item from the back
     public Item removeLast() {
-        return null;
+        if (size() == 0) {
+            throw new NoSuchElementException("Can not get an item from an empty queue...");
+        }
+        Item item = q[tail - 1];
+        q[--tail] = null;
+        if (size() > 0 && size() == capacity / 4) {
+            resize(capacity / 2);
+        }
+        return item;
+    }
+
+    // iteratorHelper
+    private class iteratorHelper implements Iterator<Item> {
+        private int i = head;
+
+        public boolean hasNext() {
+            return i < head + size();
+        }
+
+        public Item next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more items in the queue...");
+            }
+            return q[i++];
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("Unsupported operation...");
+        }
     }
 
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
-        return null;
+        return new iteratorHelper();
     }
 
     // unit testing (required)
     public static void main(String[] args) {
+
         Deque<Integer> q = new Deque<>();
+        System.out.println(q.print());
+        System.out.println("Queue is empty:" + q.isEmpty());
+
         q.addFirst(1);
+        System.out.println(q.print());
+        System.out.println("Queue is empty:" + q.isEmpty());
+        System.out.println("Size of queue:" + q.size());
+
         q.addLast(2);
         q.addLast(3);
         q.addFirst(4);
@@ -95,7 +146,35 @@ public class Deque<Item> implements Iterable<Item> {
         q.addFirst(0);
         q.addFirst(0);
         q.addFirst(0);
-        System.out.println(q);
+        try {
+            q.addFirst(null);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.toString());
+        }
+        q.removeFirst();
+        q.removeFirst();
+        q.removeLast();
+        q.removeFirst();
+        q.removeLast();
+        // q.removeLast();
+        // q.removeLast();
+        // q.removeLast();
+        // q.removeLast();
+        System.out.println(q.print());
+        Iterator<Integer> iter = q.iterator();
+
+        try {
+            iter.remove();
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Remove not supported...");
+        }
+
+        System.out.println(iter.hasNext());
+        System.out.println(iter.next());
+        System.out.println(iter.next());
+        System.out.println(iter.next());
+
+        System.out.println(q.print());
 
     }
 

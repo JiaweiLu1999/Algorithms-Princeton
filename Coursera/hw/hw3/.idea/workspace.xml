@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1e4f978-b3bd-4ae1-84e9-9e1170bce808" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Deque.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Algorithms, Part I.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Algorithms, Part I.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Deque.class" beforeDir="false" afterPath="$PROJECT_DIR$/Deque.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Deque.java" beforeDir="false" afterPath="$PROJECT_DIR$/Deque.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,8 +80,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/javey/Dev/Algorithm/Coursera/hw/hw3",
+    "last_opened_file_path": "/Users/javeylew/Dev/Algorithms-Princeton/Coursera/hw/hw3",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -111,6 +112,7 @@
       <option name="presentableId" value="Default" />
       <updated>1655953975181</updated>
       <workItem from="1655953976311" duration="5266000" />
+      <workItem from="1655990472054" duration="3453000" />
     </task>
     <servers />
   </component>
@@ -169,7 +171,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Deque.java</url>
-          <line>87</line>
+          <line>130</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

@@ -93,17 +93,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NoSuchElementException("Can not get an item from an empty queue...");
         }
 
-        int num = StdRandom.uniform(size);
-        int idx = head;
-        while (num > 0) {
-            if (q[idx] != null) {
-                num--;
-            }
-            idx++;
-        }
+        int idx;
+        do {
+            idx = StdRandom.uniform(tail - head);
+        } while (q[head + idx] == null);
 
-        Item item = q[idx];
-        q[idx] = null;
+        Item item = q[head + idx];
+        q[head + idx] = null;
         size--;
 
         if (size <= capacity / 4) {
@@ -119,51 +115,104 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NoSuchElementException("Can not get an item from an empty queue...");
         }
 
-        int num = StdRandom.uniform(size);
-        Item item = q[head + num];
+        int idx;
+        do {
+            idx = StdRandom.uniform(tail - head);
+        } while (q[head + idx] == null);
 
-        return item;
+        return q[head + idx];
     }
 
     private class IteratorHelper implements Iterator<Item> {
         private int i;
-
-
+        private Item[] qCopy;
+        private int iterSize;
         public IteratorHelper() {
             i = 0;
+            iterSize = size;
+            qCopy = (Item[]) new Object[iterSize];
+            for (int m = 0, n = 0; m < capacity; m++) {
+                if (q[m] != null) {
+                    qCopy[n++] = q[m];
+                }
+            }
         }
+
         public boolean hasNext() {
-            return i < size;
+            return i < iterSize;
         }
 
         public Item next() {
-            return null;
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more items in the queue...");
+            }
+
+            return qCopy[i++];
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("Unsupported operation...");
         }
     }
     // return an independent iterator over items in random order
     public Iterator<Item> iterator() {
-        return null;
+        return new IteratorHelper();
     }
 
     // unit testing (required)
     public static void main(String[] args) {
         RandomizedQueue<Integer> q = new RandomizedQueue<>();
         q.printAll();
+        System.out.println("q isEmpty: " + q.isEmpty());
         q.enqueue(1);
         q.enqueue(2);
         q.enqueue(3);
+        System.out.println();
         q.printAll();
+        System.out.println("Get a sample " + q.sample());
+
         q.enqueue(4);
         q.enqueue(3);
+        System.out.println();
+        q.printAll();
+        System.out.println("Size:" + q.size());
+        System.out.println("Get a sample " + q.sample());
+        System.out.println("Get a sample " + q.sample());
+        System.out.println("Get a sample " + q.sample());
+        System.out.println();
 
-        System.out.println(q.sample().toString());
-        System.out.println(q.sample().toString());
-        System.out.println(q.sample().toString());
         q.printAll();
-        q.dequeue();
-        q.dequeue();
-        q.dequeue();
+        System.out.println("Deque an item " + q.dequeue());
         q.printAll();
+        System.out.println("Size:" + q.size());
+        System.out.println("Deque an item " + q.dequeue());
+        q.printAll();
+
+        System.out.println();
+        q.printAll();
+        Iterator<Integer> iter = q.iterator();
+        while (iter.hasNext()) {
+            System.out.println("Next item: " + iter.next());
+        }
+
+        System.out.println("Deque an item " + q.dequeue());
+        q.printAll();
+
+        System.out.println();
+        q.printAll();
+        iter = q.iterator();
+        while (iter.hasNext()) {
+            System.out.println("Next item: " + iter.next());
+        }
+
+        System.out.println("Deque an item " + q.dequeue());
+        q.printAll();
+        System.out.println("Deque an item " + q.dequeue());
+        q.printAll();
+        System.out.println("Size:" + q.size());
+        System.out.println("q isEmpty: " + q.isEmpty());
+        System.out.println();
+
         q.enqueue(5);
         q.printAll();
         System.out.println(q.head);

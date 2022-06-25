@@ -4,7 +4,6 @@
  *  Description: Deque
  **************************************************************************** */
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -38,10 +37,27 @@ public class Deque<Item> implements Iterable<Item> {
         capacity = 1;
     }
 
-    private String print() {
-        return "Deque{" +
-                "q=" + Arrays.toString(q) +
-                '}';
+    private void print() {
+        Iterator<Item> iter =  iterator();
+        System.out.print("q = [ ");
+        while (iter.hasNext()) {
+            System.out.print(iter.next().toString() + " ");
+        }
+        System.out.println("]");
+    }
+
+    private void printAll() {
+        StringBuilder buf = new StringBuilder("q = [ ");
+        for (int i = 0; i < capacity; i++) {
+            if (q[i] == null) {
+                buf.append("null ");
+            } else {
+                buf.append(q[i].toString() + " ");
+            }
+        }
+        buf.append("]");
+        String s = buf.toString();
+        System.out.println(s);
     }
 
     // is the deque empty?
@@ -103,7 +119,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     // iteratorHelper
-    private class iteratorHelper implements Iterator<Item> {
+    private class IteratorHelper implements Iterator<Item> {
         private int i = head;
 
         public boolean hasNext() {
@@ -124,18 +140,20 @@ public class Deque<Item> implements Iterable<Item> {
 
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
-        return new iteratorHelper();
+        return new IteratorHelper();
     }
 
     // unit testing (required)
     public static void main(String[] args) {
 
         Deque<Integer> q = new Deque<>();
-        System.out.println(q.print());
+        q.print();
+        q.printAll();
         System.out.println("Queue is empty:" + q.isEmpty());
 
         q.addFirst(1);
-        System.out.println(q.print());
+        q.print();
+        q.printAll();
         System.out.println("Queue is empty:" + q.isEmpty());
         System.out.println("Size of queue:" + q.size());
 
@@ -151,30 +169,45 @@ public class Deque<Item> implements Iterable<Item> {
         } catch (IllegalArgumentException e) {
             System.out.println(e.toString());
         }
+        q.print();
+        q.printAll();
         q.removeFirst();
         q.removeFirst();
         q.removeLast();
         q.removeFirst();
         q.removeLast();
-        // q.removeLast();
-        // q.removeLast();
-        // q.removeLast();
-        // q.removeLast();
-        System.out.println(q.print());
-        Iterator<Integer> iter = q.iterator();
+        q.removeLast();
+        q.print();
+        q.printAll();
 
+
+        Iterator<Integer> iter = q.iterator();
         try {
             iter.remove();
         } catch (UnsupportedOperationException e) {
-            System.out.println("Remove not supported...");
+            System.out.println(e.toString());
         }
-
         System.out.println(iter.hasNext());
         System.out.println(iter.next());
         System.out.println(iter.next());
-        System.out.println(iter.next());
+        q.addLast(0);
 
-        System.out.println(q.print());
+        try {
+            System.out.println(iter.next());
+        } catch (NoSuchElementException e) {
+            System.out.println(e.toString());
+        }
+
+
+        q.print();
+        q.printAll();
+        q.removeLast();
+        try {
+            q.removeLast();
+            q.removeLast();
+        } catch (NoSuchElementException e) {
+            System.out.println(e.toString());
+        }
 
     }
 

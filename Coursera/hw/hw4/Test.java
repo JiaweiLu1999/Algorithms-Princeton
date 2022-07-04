@@ -29,7 +29,7 @@ public class Test {
         }
         StdDraw.show();
 
-        // // print and draw the line segments
+        // print and draw the line segments
         // FastCollinearPoints collinear = new FastCollinearPoints(points);
         // for (LineSegment segment : collinear.segments()) {
         //     StdOut.println(segment);
